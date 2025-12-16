@@ -3,6 +3,7 @@ package kr.java.security.config;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity // Spring Security를 활성화
+@EnableMethodSecurity // AOP -> PreAuthorize
 public class SecurityConfig {
 
     // SecurityFilterChain -> Spring Security에서 사용될 보안 규칙 설정
