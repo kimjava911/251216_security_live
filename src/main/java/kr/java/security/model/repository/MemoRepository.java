@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface MemoRepository extends JpaRepository<Memo, Long> {
     // 특정 사용자의 메모 목록 조회
     @Query("SELECT m FROM Memo m LEFT JOIN FETCH m.author WHERE m.author = :authorId ORDER BY m.createdAt DESC")
-    List<Memo> findByAuthorId(@Param("authorId") Long authorId);
+    List<Memo> findByAuthorIdWithAuthor(@Param("authorId") Long authorId);
     // 메모 상세 조회 (작성자 정보 합침)
     @Query("SELECT m FROM Memo m JOIN FETCH m.author WHERE m.id = :id")
     Optional<Memo> findByIdWithAuthor(@Param("id") Long id);
