@@ -70,11 +70,12 @@ public class MemoController {
     public String update(
             @PathVariable Long id,
             @RequestParam String title,
-            @RequestParam String content,
-            Principal principal
+            @RequestParam String content
     ) {
 //        boolean success = memoService.updateMemo(id, title, content, principal.getName());
-        memoService.updateMemo(id, title, content, principal.getName());
+        // 수정된 부분 !!!
+        String authorName = memoService.getMemo(id).getAuthor().getUsername();
+        memoService.updateMemo(id, title, content, authorName);
 //        if (success) {
             return "redirect:/memo/" + id;
 //        }
@@ -82,8 +83,10 @@ public class MemoController {
     }
 
     @PostMapping("/{id}/delete")
-    public String delete(@PathVariable Long id, Principal principal) {
-        memoService.deleteMemo(id, principal.getName());
+    public String delete(@PathVariable Long id) {
+        // 수정된 부분 !!!
+        String authorName = memoService.getMemo(id).getAuthor().getUsername();
+        memoService.deleteMemo(id, authorName);
         return "redirect:/memo";
     }
 }

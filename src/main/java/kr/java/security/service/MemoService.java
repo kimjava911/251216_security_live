@@ -46,7 +46,8 @@ public class MemoService {
 
     // 메모 수정
     @Transactional
-    @PreAuthorize("#username == authentication.name")
+//    @PreAuthorize("denyAll()") // 패싱 테스트
+    @PreAuthorize("#username == principal.username")
 //    public boolean updateMemo(Long id, String title, String content, String username) {
     public void updateMemo(Long id, String title, String content, String username) {
         // -> AccessDeniedException
@@ -63,7 +64,7 @@ public class MemoService {
 
     // 메모 삭제
     @Transactional
-    @PreAuthorize("#username == authentication.name")
+    @PreAuthorize("#username == authentication")
 //    public boolean deleteMemo(Long id, String username) {
     public void deleteMemo(Long id, String username) {
         Memo memo = getMemo(id);
