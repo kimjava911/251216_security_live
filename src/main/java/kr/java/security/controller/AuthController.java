@@ -1,10 +1,13 @@
 package kr.java.security.controller;
 
+import kr.java.security.service.AuthService;
 import kr.java.security.service.MemoService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
+
+    private final AuthService authService;
 
     @GetMapping("/login")
     public String loginPage(
@@ -30,5 +35,25 @@ public class AuthController {
             model.addAttribute("logoutMessage", "로그아웃되었습니다");
         }
         return "auth/login"; // forward
+    }
+
+    // Get (-> Form)
+    // Post (-> Redirect, Forward...)
+    @GetMapping("/signup")
+    public String signupPage() { return "auth/signup"; }
+
+    @PostMapping("/signup")
+    public String signup(
+            @RequestParam String username,
+            @RequestParam String password,
+            Model model
+    ) {
+        try {
+            authService.signup(username, password);
+            return "redirect:/auth/login?signup=success";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
+        return "auth/signup";
     }
 }
