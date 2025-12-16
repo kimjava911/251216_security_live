@@ -5,6 +5,7 @@ import kr.java.security.model.entity.UserAccount;
 import kr.java.security.model.repository.MemoRepository;
 import kr.java.security.model.repository.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,16 +46,19 @@ public class MemoService {
 
     // 메모 수정
     @Transactional
-    public boolean updateMemo(Long id, String title, String content, String username) {
+    @PreAuthorize("#username == authentication.name")
+//    public boolean updateMemo(Long id, String title, String content, String username) {
+    public void updateMemo(Long id, String title, String content, String username) {
+        // -> AccessDeniedException
         Memo memo = getMemo(id);
 
-        if (!memo.getAuthor().getUsername().equals(username)) {
-            return false; // 본인 글이 아니라면 false 처리
-        }
+//        if (!memo.getAuthor().getUsername().equals(username)) {
+//            return false; // 본인 글이 아니라면 false 처리
+//        }
 
         memo.setTitle(title);
         memo.setContent(content); // Dirty Checking
-        return true;
+//        return true;
     }
 
     // 메모 삭제

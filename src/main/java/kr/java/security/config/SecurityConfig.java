@@ -59,6 +59,14 @@ public class SecurityConfig {
                         .invalidateHttpSession(true) // 세션 무효화
                         .deleteCookies("JSESSIONID") // 세션 쿠키 삭제
                         .permitAll())
+            // 예외처리
+            .exceptionHandling(ex -> ex
+                    // 인증되지 않은 사용자가 보호한 리소스 접근할 경우
+                    // (로그인 안된 사람)
+                    .authenticationEntryPoint(((request, response, authException) -> response.sendRedirect("/auth/login"))
+                            // AccessDeniedException
+                    ).accessDeniedPage("/error/403")
+            )
         ;
         return http.build();
     }
