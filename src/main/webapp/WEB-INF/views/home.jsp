@@ -26,7 +26,7 @@
         <%-- TODO : ADMIN --%>
         <a href="<c:url value="/memo" />">내 메모</a>
         <form action="<c:url value="/auth/logout" />" method="post">
-            <%-- TODO : CSRF --%>
+            <input hidden="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
             <button>로그아웃</button>
         </form>
     </sec:authorize>

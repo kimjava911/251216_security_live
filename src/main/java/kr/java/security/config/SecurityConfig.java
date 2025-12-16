@@ -1,5 +1,6 @@
 package kr.java.security.config;
 
+import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +19,9 @@ public class SecurityConfig {
             // URL별 접근 권한 설정
             .authorizeHttpRequests(
                     auth -> auth
+                    // JSP Forwarding
+                    // jakarta.servlet.DispatcherType
+                    .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                     // 먼저 작성된 문법이 우선권 가짐
                     .requestMatchers("/", "/auth/**").permitAll()
                     // requestMatchers - 뒤에 나열할 패턴과 일치하는 것들에 대하여
