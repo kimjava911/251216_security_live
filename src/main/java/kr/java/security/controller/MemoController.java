@@ -49,4 +49,41 @@ public class MemoController {
         memoService.createMemo(title, content, principal.getName());
         return "redirect:/memo";
     }
+
+    @GetMapping("/{id}/edit")
+    public String editForm(
+            @PathVariable Long id,
+            Principal principal,
+            Model model
+    ) {
+        Memo memo = memoService.getMemo(id);
+
+        if (!memo.getAuthor().getUsername().equals(principal.getName())) {
+            return "redirect:/memo"; // 본인 글이 아닌데 수정 시도
+        }
+
+        model.addAttribute("memo", memo);
+        return "memo/edit";
+    }
+
+    @PostMapping("/{id}/edit")
+    public String update(
+            @PathVariable Long id,
+            @RequestParam String title,
+            @RequestParam String content,
+            Principal principal) {
+        boolean success = memoService.updateMemo(id, title, content, principal.getName());
+
+        if (success) {
+            return "redirect:/memo" + id;
+        }
+        return "redirect:/memo"; // 권한 없이 post 시도를 했으면...
+    }
+
+
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable Long id, Principal principal) {
+        memoService.deleteMemo(id, principal.getName());
+        return "redirect:/memo";
+    }
 }
