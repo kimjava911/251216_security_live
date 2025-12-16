@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -56,5 +59,18 @@ public class SecurityConfig {
                         .permitAll())
         ;
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        // 1. BCrypt -> only. $2affffffffff...
+        // 기본적으로는 BCrypt를 사용하지만 상황에 따라서 여러가지 인증.
+//        return new BCryptPasswordEncoder();
+        // 2. PasswordEncoderFactories.createDelegatingPasswordEncoder() -> BCrypt
+        // https://docs.spring.io/spring-security/reference/features/authentication/password-storage.html
+        // https://docs.spring.io/spring-security/reference/6.5/features/authentication/password-storage.html
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder(); // 호환성 높음
+        // {bcrypt}$2a1111111...
+        // {noop}12345
     }
 }
