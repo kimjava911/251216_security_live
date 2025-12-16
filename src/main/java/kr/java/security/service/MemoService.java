@@ -42,4 +42,31 @@ public class MemoService {
         memo.setAuthor(author);
         return memoRepository.save(memo);
     }
+
+    // 메모 수정
+    @Transactional
+    public boolean updateMemo(Long id, String title, String content, String username) {
+        Memo memo = getMemo(id);
+
+        if (!memo.getAuthor().getUsername().equals(username)) {
+            return false; // 본인 글이 아니라면 false 처리
+        }
+
+        memo.setTitle(title);
+        memo.setContent(content); // Dirty Checking
+        return true;
+    }
+
+    // 메모 삭제
+    @Transactional
+    public boolean deleteMemo(Long id, String username) {
+        Memo memo = getMemo(id);
+
+        if (!memo.getAuthor().getUsername().equals(username)) {
+            return false; // 본인 글이 아니라면 false 처리
+        }
+
+        memoRepository.delete(memo);
+        return true;
+    }
 }
