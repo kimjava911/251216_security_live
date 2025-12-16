@@ -19,7 +19,7 @@ public class MemoService {
     private final UserAccountRepository userAccountRepository;
 
     // 현재 로그인한 사용자의 메모 목록 조회
-    public List<Memo> getMyMemo(String username) {
+    public List<Memo> getMyMemos(String username) {
         UserAccount user = userAccountRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
         return memoRepository.findByAuthorIdWithAuthor(user.getId());
