@@ -76,7 +76,7 @@ public class MemoController {
 //        boolean success = memoService.updateMemo(id, title, content, principal.getName());
         memoService.updateMemo(id, title, content, principal.getName());
 //        if (success) {
-            return "redirect:/memo" + id;
+            return "redirect:/memo/" + id;
 //        }
 //        return "redirect:/memo"; // 권한 없이 post 시도를 했으면...
     }
