@@ -70,17 +70,16 @@ public class MemoController {
     public String update(
             @PathVariable Long id,
             @RequestParam String title,
-            @RequestParam String content
-//            Principal principal
+            @RequestParam String content,
+            Principal principal
     ) {
 //        boolean success = memoService.updateMemo(id, title, content, principal.getName());
-
+        memoService.updateMemo(id, title, content, principal.getName());
 //        if (success) {
             return "redirect:/memo" + id;
 //        }
 //        return "redirect:/memo"; // 권한 없이 post 시도를 했으면...
     }
-
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id, Principal principal) {

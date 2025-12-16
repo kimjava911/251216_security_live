@@ -63,14 +63,16 @@ public class MemoService {
 
     // 메모 삭제
     @Transactional
-    public boolean deleteMemo(Long id, String username) {
+    @PreAuthorize("#username == authentication.name")
+//    public boolean deleteMemo(Long id, String username) {
+    public void deleteMemo(Long id, String username) {
         Memo memo = getMemo(id);
 
-        if (!memo.getAuthor().getUsername().equals(username)) {
-            return false; // 본인 글이 아니라면 false 처리
-        }
+//        if (!memo.getAuthor().getUsername().equals(username)) {
+//            return false; // 본인 글이 아니라면 false 처리
+//        }
 
         memoRepository.delete(memo);
-        return true;
+//        return true;
     }
 }
