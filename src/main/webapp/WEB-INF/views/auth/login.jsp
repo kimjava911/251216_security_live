@@ -21,7 +21,7 @@
     <%-- action -> .loginProcessingUrl("/auth/login"), POST --%>
     <form action="<c:url value="/auth/login" />" method="post">
         <input name="username" placeholder="username">
-        <input name="password" type="password" placeholder="username">
+        <input name="password" type="password" placeholder="password">
         <%-- CSRF -> Spring Security POST -> CSRF Token -> 403 --%>
         <input hidden="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
         <button>로그인</button>

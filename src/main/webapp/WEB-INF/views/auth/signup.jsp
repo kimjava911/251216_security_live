@@ -5,10 +5,10 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
-    <title>로그인</title>
+    <title>회원가입</title>
 </head>
 <body>
-    <h1>로그인</h1>
+    <h1>회원가입</h1>
 
     <%-- 메시지 표시 영역 --%>
     <c:if test="${not empty errorMessage}">
@@ -17,7 +17,7 @@
 
     <form action="<c:url value="/auth/signup" />" method="post">
         <input name="username" placeholder="username">
-        <input name="password" type="password" placeholder="username">
+        <input name="password" type="password" placeholder="password">
         <%-- CSRF -> Spring Security POST -> CSRF Token -> 403 --%>
         <input hidden="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
         <%--        --%>
