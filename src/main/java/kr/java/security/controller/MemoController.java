@@ -5,9 +5,7 @@ import kr.java.security.service.MemoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -35,5 +33,20 @@ public class MemoController {
         model.addAttribute("memo", memo);
         model.addAttribute("isOwner", isOwner);
         return "memo/detail";
+    }
+
+    @GetMapping("/new")
+    public String createForm() {
+        return "memo/form";
+    }
+
+    @PostMapping("/new")
+    public String create(
+            @RequestParam String title,
+            @RequestParam String content,
+            Principal principal
+    ) {
+        memoService.createMemo(title, content, principal.getName());
+        return "redirect:/memo";
     }
 }
