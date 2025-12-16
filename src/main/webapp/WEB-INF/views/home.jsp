@@ -23,7 +23,10 @@
             <sec:authentication property="name" />님!
         </p>
         <p>권한 : <sec:authentication property="authorities" /></p>
-        <%-- TODO : ADMIN --%>
+        <%-- Admin 권한을 갖고 있는 사용자에게만 표시 --%>
+        <sec:authorize access="hasRole('ADMIN')">
+            <a href="<c:url value="/auth/admin" />">관리자 페이지</a>
+        </sec:authorize>
         <a href="<c:url value="/memo" />">내 메모</a>
         <form action="<c:url value="/auth/logout" />" method="post">
             <input hidden="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
